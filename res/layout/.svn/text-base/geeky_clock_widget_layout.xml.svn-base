@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/widget_dimen">
+    
+    
+    <ImageView
+        android:id="@+id/backgroundImage"
+        android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:src="@drawable/appwidget_bg_clickable"
+	    android:scaleType="fitXY"/>
+    
+    
+    <RelativeLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+    	android:layout_height="match_parent">
+    	
+        <ImageView
+            android:id="@+id/led_0_0"
+            android:src="@drawable/dark_black_glossy_18px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        
+        <ImageView
+            android:id="@+id/led_0_1"
+            android:src="@drawable/dark_black_glossy_18px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/led_0_0"            
+            android:paddingLeft="@dimen/padding_between_digits_short"/>
+        
+        <ImageView
+            android:id="@+id/led_0_2"
+            android:src="@drawable/dark_black_glossy_18px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/led_0_1"/>
+        
+        <ImageView
+            android:id="@+id/led_0_3"
+            android:src="@drawable/dark_black_glossy_18px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/led_0_2"/>
+        
+        <ImageView
+            android:id="@+id/led_0_4"
+            android:src="@drawable/dark_black_glossy_18px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/led_0_3"
+            android:paddingLeft="@dimen/padding_between_digits_long"/>
+        
+        <ImageView
+            android:id="@+id/led_0_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/led_0_4"
+            android:src="@drawable/dark_black_glossy_18px" />
+        
+        <ImageView
+            android:id="@+id/led_0_6"
+            android:src="@drawable/dark_black_glossy_18px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/led_0_5"/>
+        
+        <ImageView
+            android:id="@+id/led_0_7"
+            android:src="@drawable/dark_black_glossy_18px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/led_0_6"
+            android:paddingLeft="@dimen/padding_between_digits_short"/>
+        
+        <ImageView
+            android:id="@+id/led_0_8"
+            android:src="@drawable/dark_black_glossy_18px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/led_0_7"/>
+        
+        <ImageView
+            android:id="@+id/led_0_9"
+            android:src="@drawable/dark_black_glossy_18px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/led_0_8"/>
+        
+        <!-- SECOND ROW -->
+        
+        <ImageView
+            android:id="@+id/led_1_0"
+            android:src="@drawable/dark_black_glossy_18px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/led_0_0"/>
+        
+        <ImageView
+            android:id="@+id/led_1_1"
+            android:src="@drawable/dark_black_glossy_18px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/led_1_0"
+            android:layout_below="@id/led_0_1"            
+            android:paddingLeft="@dimen/padding_between_digits_short"/>
+        
+        <ImageView
+            android:id="@+id/led_1_2"
+            android:src="@drawable/dark_black_glossy_18px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/led_1_1"
+            android:layout_below="@id/led_0_2"/>
+        
+        <ImageView
+            android:id="@+id/led_1_3"
+            android:src="@drawable/dark_black_glossy_18px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/led_1_2"
+            android:layout_below="@id/led_0_3"/>
+        
+        <ImageView
+            android:id="@+id/led_1_4"
+            android:src="@drawable/dark_black_glossy_18px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/led_1_3"
+            android:layout_below="@id/led_0_4"
+            android:paddingLeft="@dimen/padding_between_digits_long"/>
+        
+        <ImageView
+            android:id="@+id/led_1_5"
+            android:src="@drawable/dark_black_glossy_18px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/led_1_4"
+            android:layout_below="@id/led_0_5"/>
+        
+        <ImageView
+            android:id="@+id/led_1_6"
+            android:src="@drawable/dark_black_glossy_18px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/led_1_5"
+            android:layout_below="@id/led_0_6"/>
+        
+        <ImageView
+            android:id="@+id/led_1_7"
+            android:src="@drawable/dark_black_glossy_18px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/led_1_6"
+            android:layout_below="@id/led_0_7"
+            android:paddingLeft="@dimen/padding_between_digits_short"/>
+        
+        <ImageView
+            android:id="@+id/led_1_8"
+            android:src="@drawable/dark_black_glossy_18px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/led_1_7"
+            android:layout_below="@id/led_0_8"/>
+        
+        <ImageView
+            android:id="@+id/led_1_9"
+            android:src="@drawable/dark_black_glossy_18px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/led_1_8"
+            android:layout_below="@id/led_0_9"/>
+        
+        <!-- THIRD ROW -->
+        
+        <ImageView
+            android:id="@+id/led_2_0"
+            android:src="@drawable/dark_black_glossy_18px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/led_1_0"/>
+        
+        <ImageView
+            android:id="@+id/led_2_1"
+            android:src="@drawable/dark_black_glossy_18px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/led_2_0"
+            android:layout_below="@id/led_1_1"            
+            android:paddingLeft="@dimen/padding_between_digits_short"/>
+        
+        <ImageView
+            android:id="@+id/led_2_2"
+            android:src="@drawable/dark_black_glossy_18px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/led_2_1"
+            android:layout_below="@id/led_1_2"/>
+        
+        <ImageView
+            android:id="@+id/led_2_3"
+            android:src="@drawable/dark_black_glossy_18px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/led_2_2"
+            android:layout_below="@id/led_1_3"/>
+        
+        <ImageView
+            android:id="@+id/led_2_4"
+            android:src="@drawable/dark_black_glossy_18px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/led_2_3"
+            android:layout_below="@id/led_1_4"
+            android:paddingLeft="@dimen/padding_between_digits_long"/>
+        
+        <ImageView
+            android:id="@+id/led_2_5"
+            android:src="@drawable/dark_black_glossy_18px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/led_2_4"
+            android:layout_below="@id/led_1_5"/>
+        
+        <ImageView
+            android:id="@+id/led_2_6"
+            android:src="@drawable/dark_black_glossy_18px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/led_2_5"
+            android:layout_below="@id/led_1_6"/>
+        
+        <ImageView
+            android:id="@+id/led_2_7"
+            android:src="@drawable/dark_black_glossy_18px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/led_2_6"
+            android:layout_below="@id/led_1_7"
+            android:paddingLeft="@dimen/padding_between_digits_short"/>
+        
+        <ImageView
+            android:id="@+id/led_2_8"
+            android:src="@drawable/dark_black_glossy_18px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/led_2_7"
+            android:layout_below="@id/led_1_8"/>
+        
+        <ImageView
+            android:id="@+id/led_2_9"
+            android:src="@drawable/dark_black_glossy_18px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/led_2_8"
+            android:layout_below="@id/led_1_9"/>
+        
+    </RelativeLayout>
+
+</FrameLayout>

@@ -1,0 +1,62 @@
+package com.syzov.geekyClock;
+
+import java.util.Calendar;
+
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.appwidget.AppWidgetManager;
+import android.appwidget.AppWidgetProvider;
+import android.content.Context;
+import android.content.Intent;
+import android.os.SystemClock;
+import android.widget.Toast;
+
+public class GeekyClockReceiver extends AppWidgetProvider {
+	
+	static private PendingIntent pendingIntent=null;
+	
+	@Override
+	public void onDisabled(Context context) {
+		Toast.makeText(context, "Geeky Clock, GeekyClockReceiver: onDisabled", Toast.LENGTH_SHORT).show();
+		
+		AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+		am.cancel(pendingIntent);
+		
+		//TODO(vs, 18.12.2011) Stop the service here, as we deleted last instance of widget
+		
+		super.onDisabled(context);
+	}
+	
+	@Override
+	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+		Toast.makeText(context, "Geeky Clock, GeekyClockReceiver: onUpdate", Toast.LENGTH_SHORT).show();
+		super.onUpdate(context, appWidgetManager, appWidgetIds);
+		
+		//TODO(vs, 18.12.2011) Consider using "IntentService"
+		//instead if service to handle multi-access
+		
+		final Calendar TIME = Calendar.getInstance();  
+        TIME.set(Calendar.MINUTE, 0);  
+        TIME.set(Calendar.SECOND, 15);  
+        TIME.set(Calendar.MILLISECOND, 0);
+		
+		if(pendingIntent==null){
+			Intent intent = new Intent(context, WidgetUpdateService.class);
+			pendingIntent = PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+		}
+		
+		//starting the service that will update our widgets
+		final AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+		am.setRepeating(AlarmManager.RTC, /*TIME.getTime().getTime()*/ SystemClock.elapsedRealtime(), 1000*10, pendingIntent);
+	}
+	
+	@Override
+	public void onDeleted(Context context, int[] appWidgetIds) {
+		Toast.makeText(context, "Geeky Clock, GeekyClockReceiver: onDeleted", Toast.LENGTH_SHORT).show();
+		
+		//TODO(vs, 27.12.2011) Remove shared preferences records
+		
+		super.onDeleted(context, appWidgetIds);
+	}
+	
+}

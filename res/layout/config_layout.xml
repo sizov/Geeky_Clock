@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <TableLayout
+        android:layout_width="match_parent"
+    	android:layout_height="wrap_content">
+
+        <TableRow
+            android:layout_width="match_parent"
+    		android:layout_height="wrap_content">
+            
+            <TextView android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="@string/background_visible"/>
+            
+		    <CheckBox
+		        android:id="@+id/backgroundVisibleCheckBox"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"/>
+            
+        </TableRow>
+        
+        
+        <TableRow
+            android:id="@+id/backgroundVisibilityTableRow"
+            android:layout_width="match_parent"
+    		android:layout_height="wrap_content">
+            
+            <TextView android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="@string/pick_background"/>
+		    <Spinner
+		        android:id="@+id/backgroundSpinner"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="1" />
+            
+        </TableRow>
+        
+        <TableRow
+	        android:layout_width="match_parent"
+	 		android:layout_height="wrap_content">
+  
+			<TextView
+			    android:text="@string/pick_on_color"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"/>
+		    <Spinner
+		        android:id="@+id/ledOnSpinner"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="1" />
+		            
+        </TableRow>
+        
+        <TableRow            
+            android:layout_width="match_parent"
+    		android:layout_height="wrap_content">
+            
+            <TextView android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="@string/led_off_visible"/>
+		    <CheckBox
+		        android:id="@+id/ledOffVisibleCheckBox"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"/>
+            
+        </TableRow>
+                
+        <TableRow
+            android:id="@+id/ledOffVisibilityTableRow"
+	        android:layout_width="match_parent"
+	 		android:layout_height="wrap_content">
+		
+			<TextView
+			    android:text="@string/pick_off_color"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"/>    						<Spinner
+			    android:id="@+id/ledOffSpinner"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_weight="1" />
+            
+        </TableRow>
+        
+    </TableLayout>
+	    
+	<Button
+	    android:layout_gravity="bottom"
+	    android:id="@+id/applyButton"
+	    android:text="@string/apply_config"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"/>
+	
+
+</LinearLayout>

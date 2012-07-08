@@ -1,0 +1,290 @@
+package com.syzov.geekyClock;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.appwidget.AppWidgetManager;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.content.res.Resources;
+import android.os.Bundle;
+import android.os.SystemClock;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.RemoteViews;
+import android.widget.Spinner;
+import android.widget.TableRow;
+
+import com.syzov.geekyClock.utils.ColorUtils;
+
+public class ConfigurationActivity extends Activity implements View.OnClickListener{
+	
+	static final public String PREFERENCES_NAME = "com.syzov.geekyClock.PREFERENCES"; 
+	static final public String LED_ON_RESOURCE_ID_KEY_MARKER = "_LED_ON_RESOURCE_ID";
+	static final public String LED_OFF_RESOURCE_ID_KEY_MARKER = "_LED_OFF_RESOURCE_ID";
+	static final public String LED_OFF_VISIBILITY_KEY_MARKER = "_LED_OFF_VISIBILITY";
+	
+	/** Current widget ID.*/
+	int widgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
+	
+	/** List of background colors.*/
+	List<CharSequence> backgroundColors;
+	
+	/** List of LED colors.*/
+	List<CharSequence> ledColors;
+	
+	/** ID of resource that will be used for background.*/
+	int backgroundColorResourceID;
+	
+	/** ID of resource that will be used for LED OFF.*/
+	int ledOffResourceID;
+	
+	/** ID of resource that will be used for LED ON.*/
+	int ledOnResourceID;
+	
+	/** Flag that shows if inactive LEDs are visible.*/
+	boolean isLedOffElementsVisible;
+	
+	/** Flag that shows if background visible.*/
+	boolean isBackgroundVisible;
+	
+	/** Called when the activity is first created. */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		
+		setResult(RESULT_CANCELED);
+		
+		//retrieving widget id
+		Intent intent = getIntent();
+		Bundle extra = intent.getExtras();	    
+		if(extra!=null){
+			widgetId = extra.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
+		}
+		
+		//if can't retrieve widget id - finish
+		if(widgetId==AppWidgetManager.INVALID_APPWIDGET_ID){
+			finish();
+			return;
+		}
+		
+		setContentView(R.layout.config_layout);
+		
+		Resources r = getResources();
+		
+		
+		//creating list of background colors
+		backgroundColors = new ArrayList<CharSequence>();
+		backgroundColors.add(r.getString(R.string.blackColor));
+		backgroundColors.add(r.getString(R.string.whiteColor));
+		
+		//configuring background spinner
+		Spinner backgroundColorSpinner = (Spinner) findViewById(R.id.backgroundSpinner);
+	    ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(this, android.R.layout.simple_spinner_item, backgroundColors);
+	    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+	    backgroundColorSpinner.setAdapter(adapter);
+	    backgroundColorSpinner.setOnItemSelectedListener(backgroundColorSelectedListener);
+	    
+	    //setting default background color
+	    int blackBackgroundColorIndex = backgroundColors.indexOf(R.string.blackColor);
+	    backgroundColorSpinner.setSelection(blackBackgroundColorIndex);
+	    backgroundColorResourceID = ColorUtils.getBackgroundDrawableIdByColorString((String) backgroundColors.get(0), getApplicationContext());
+	    
+	    
+	    //setting default background visibility
+	    isBackgroundVisible = true;
+	    CheckBox backgroundVisiabilityCheckBox = (CheckBox) findViewById(R.id.backgroundVisibleCheckBox);
+	    backgroundVisiabilityCheckBox.setChecked(isBackgroundVisible);
+	    backgroundVisiabilityCheckBox.setOnCheckedChangeListener(backgroundVisibilityListener);
+	    toggleView(R.id.backgroundVisibilityTableRow, isBackgroundVisible);
+
+	    //setting default LED_OFF elements visibility (should LED elements that are turned of be visible)
+	    isLedOffElementsVisible = true;
+	    CheckBox ledOffVisibleCheckBox = (CheckBox) findViewById(R.id.ledOffVisibleCheckBox);
+	    ledOffVisibleCheckBox.setChecked(isLedOffElementsVisible);
+	    ledOffVisibleCheckBox.setOnCheckedChangeListener(ledOffVisibilityListener);
+	    toggleView(R.id.ledOffVisibilityTableRow, isLedOffElementsVisible);
+	    
+	    //creating list of LED colors
+	    ledColors = new ArrayList<CharSequence>();
+	    ledColors.add(r.getString(R.string.blackColor));
+	    ledColors.add(r.getString(R.string.whiteColor));
+	    ledColors.add(r.getString(R.string.blueColor));
+	    ledColors.add(r.getString(R.string.greenColor));
+	    ledColors.add(r.getString(R.string.redColor));
+	    ledColors.add(r.getString(R.string.yellowColor));
+	    
+		//configuring spinner for LED "ON" color
+		Spinner spinnerLedOn = (Spinner) findViewById(R.id.ledOnSpinner);
+	    ArrayAdapter<CharSequence> adapterLedOn = new ArrayAdapter<CharSequence>(this, android.R.layout.simple_spinner_item, ledColors);
+	    adapterLedOn.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+	    spinnerLedOn.setAdapter(adapterLedOn);
+	    spinnerLedOn.setOnItemSelectedListener(ledOnColorSelectedListener);
+	    
+	    //setting GREEN color as default LED_ON color
+	    int greenColorIndex = ledColors.indexOf(r.getString(R.string.greenColor));
+	    spinnerLedOn.setSelection(greenColorIndex);
+	    ledOnResourceID = ColorUtils.getBackgroundDrawableIdByColorString(r.getString(R.string.greenColor), getApplicationContext());
+
+	    //configuring spinner for LED "OFF" color
+  		Spinner spinnerLedOff = (Spinner) findViewById(R.id.ledOffSpinner);
+  	    ArrayAdapter<CharSequence> adapterLedOff = new ArrayAdapter<CharSequence>(this, android.R.layout.simple_spinner_item, ledColors);
+  	    adapterLedOff.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+  	    spinnerLedOff.setAdapter(adapterLedOff);
+  	  	spinnerLedOff.setOnItemSelectedListener(ledOffColorSelectedListener);
+  	  	
+	    //setting BLACK color as default LED_OFF color
+	    int blackColorIndex = ledColors.indexOf(r.getString(R.string.blackColor));
+	    spinnerLedOff.setSelection(blackColorIndex);
+	    ledOffResourceID = ColorUtils.getBackgroundDrawableIdByColorString(r.getString(R.string.blackColor), getApplicationContext());	    
+		
+		//get reference to "apply" button and attach listener
+		Button applyButton = (Button) findViewById(R.id.applyButton);
+		applyButton.setOnClickListener(this);		
+	}
+	
+	public void onClick(View v) {
+		switch(v.getId()){
+		case R.id.applyButton:
+			applyConfig();
+			break;		
+		}
+	}
+
+	/** Listener to click on apply button.*/
+	private void applyConfig(){
+		final Context context = ConfigurationActivity.this;
+
+	    //updating current widget
+	    AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+	    RemoteViews views = new RemoteViews(getPackageName(), R.layout.geeky_clock_widget_layout);
+	    
+	    //setting background color
+	    views.setImageViewResource(R.id.backgroundImage, backgroundColorResourceID);
+	    
+	    //setting background visiability
+	    int viewVisibility = isBackgroundVisible ? View.VISIBLE : View.INVISIBLE;
+	    views.setViewVisibility(R.id.backgroundImage, viewVisibility);
+	    
+	    //saving LED colors for future updates
+	    storeLedColorResourceIdToSharedPreferences(ledOnResourceID, LED_ON_RESOURCE_ID_KEY_MARKER);
+	    storeLedColorResourceIdToSharedPreferences(ledOffResourceID, LED_OFF_RESOURCE_ID_KEY_MARKER);
+	    storeLedOffVisibilityToSharedPreferences(isLedOffElementsVisible);
+	    
+	    appWidgetManager.updateAppWidget(widgetId, views);
+	    
+	    
+	    
+	    /////////////////////////////////////////////
+	    
+		//starting the service that will update our widgets (launch onUpdate method of WidgetProvider)
+		if(pendingIntent==null){
+			Intent intent = new Intent(context, WidgetUpdateService.class);
+			pendingIntent = PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+		}
+		
+		final AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+		am.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), 1000*10, pendingIntent);
+
+	    
+	    ///////////////////////////////////////////
+	    
+		
+	    //create result intent
+	    Intent resultIntent = new Intent();
+	    resultIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
+	    setResult(RESULT_OK, resultIntent);
+	    finish();
+	}
+	
+	/** Listener for item selection in background color spinner.*/
+	private OnItemSelectedListener backgroundColorSelectedListener = new OnItemSelectedListener(){
+		public void onItemSelected(AdapterView<?> parent, View arg1, int pos, long arg3) {
+			String selectedColor = (String) parent.getItemAtPosition(pos);			
+			backgroundColorResourceID = ColorUtils.getBackgroundDrawableIdByColorString(selectedColor, getApplicationContext());
+		}
+		public void onNothingSelected(AdapterView<?> arg0) {
+		}	
+	};
+	
+	/** Listener for item selection for LED "ON" color spinner.*/
+	private OnItemSelectedListener ledOnColorSelectedListener = new OnItemSelectedListener(){
+		public void onItemSelected(AdapterView<?> parent, View arg1, int pos, long arg3) {
+			String selectedColorAsString = (String) parent.getItemAtPosition(pos);
+			ledOnResourceID = ColorUtils.getLedDrawableIdByColorString(selectedColorAsString, getApplicationContext());
+		}
+		public void onNothingSelected(AdapterView<?> arg0) {
+		}	
+	};
+	
+	/** Listener for item selection for LED "OFF" color spinner.*/
+	private OnItemSelectedListener ledOffColorSelectedListener = new OnItemSelectedListener(){
+		public void onItemSelected(AdapterView<?> parent, View arg1, int pos, long arg3) {
+			String selectedColorAsString = (String) parent.getItemAtPosition(pos);			
+			ledOffResourceID = ColorUtils.getLedDrawableIdByColorString(selectedColorAsString, getApplicationContext());
+		}
+		public void onNothingSelected(AdapterView<?> arg0) {
+		}	
+	};
+	
+	/** Listener for selection of background visibility checkbox.*/
+	private OnCheckedChangeListener backgroundVisibilityListener = new OnCheckedChangeListener() {		
+		public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+			isBackgroundVisible = isChecked;			
+			toggleView(R.id.backgroundVisibilityTableRow, isBackgroundVisible);
+		}
+	};
+	
+	/** Listener for selection of LED_OFF visiblity checkbox.*/
+	private OnCheckedChangeListener ledOffVisibilityListener = new OnCheckedChangeListener() {		
+		public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+			isLedOffElementsVisible = isChecked;			
+			toggleView(R.id.ledOffVisibilityTableRow, isLedOffElementsVisible);
+		}
+	};
+	
+
+	/** Writing value to shared preferences.*/
+	protected void storeLedColorResourceIdToSharedPreferences(int selectedColorDrawableID, String onOffMarker) {
+		String widgetIdAsString = Integer.toString(widgetId);
+		
+		//storing LED ON drawable for this widget in Shared Preferences
+		SharedPreferences preferences = getSharedPreferences(PREFERENCES_NAME, 0);
+		Editor editor = preferences.edit(); 
+		editor.putInt(widgetIdAsString+onOffMarker, selectedColorDrawableID);
+		
+		editor.commit();		
+	}
+	
+	/** Writing boolean value to shared preferences.*/
+	protected void storeLedOffVisibilityToSharedPreferences(boolean isVisible) {
+		String widgetIdAsString = Integer.toString(widgetId);
+		
+		//storing LED ON drawable for this widget in Shared Preferences
+		SharedPreferences preferences = getSharedPreferences(PREFERENCES_NAME, 0);
+		Editor editor = preferences.edit(); 
+		editor.putBoolean(widgetIdAsString+LED_OFF_VISIBILITY_KEY_MARKER, isVisible);
+		
+		editor.commit();		
+	}
+
+	/** Shows/Hides background part of menu.*/
+	private void toggleView(int viewID, boolean isVisible) {
+		//hiding/showing selection of background color
+		int viewVisibility = isVisible ? View.VISIBLE : View.GONE;			
+		TableRow backgroundVisibilityTableRow = (TableRow) findViewById(viewID);
+		backgroundVisibilityTableRow.setVisibility(viewVisibility);
+	}
+
+}

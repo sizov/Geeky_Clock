@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="app_name">Geeky Clock</string>
+	<string name="apply_config">Apply</string>
+	<string name="pick_background">Background color</string>
+	<string name="pick_on_color">Active LEDs color</string>
+	<string name="pick_off_color">Inactive LEDs color</string>
+	<string name="background_visible">Background visible</string>
+	<string name="led_off_visible">Show inactive LEDs</string>
+	
+    <string name="blackColor">Black</string>
+    <string name="whiteColor">White</string>
+    <string name="yellowColor">Yellow</string>
+    <string name="redColor">Red</string>
+    <string name="greenColor">Green</string>
+    <string name="blueColor">Blue</string>
+	    
+</resources>

@@ -1,0 +1,71 @@
+10
+
+dir
+3
+https://subversion.assembla.com/svn/geekyclock/GeekyClock/res
+https://subversion.assembla.com/svn/geekyclock
+
+
+
+2011-12-27T15:53:54.993662Z
+3
+v.sizov
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+7e1628de-57ea-4a0a-8184-b1e9786f8f14
+
+
+
+
+
+
+0
+
+drawable
+dir
+
+drawable-hdpi
+dir
+
+drawable-hdpi-v14
+dir
+
+drawable-ldpi
+dir
+
+drawable-mdpi
+dir
+
+drawable-mdpi-v14
+dir
+
+drawable-nodpi
+dir
+
+drawable-xhdpi-v14
+dir
+
+layout
+dir
+
+values
+dir
+
+values-v14
+dir
+
+xml
+dir
+

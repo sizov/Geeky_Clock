@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<dimen name="widget_dimen">0dp</dimen>    
+	<dimen name="padding_between_digits_short" >8dp</dimen>
+	<dimen name="padding_between_digits_long" >8dp</dimen>
+</resources>

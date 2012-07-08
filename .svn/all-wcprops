@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/geekyclock/!svn/ver/2/GeekyClock
+END
+AndroidManifest.xml
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/geekyclock/!svn/ver/3/GeekyClock/AndroidManifest.xml
+END
+project.properties
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/geekyclock/!svn/ver/3/GeekyClock/project.properties
+END
+.project
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/geekyclock/!svn/ver/3/GeekyClock/.project
+END
+proguard.cfg
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/geekyclock/!svn/ver/3/GeekyClock/proguard.cfg
+END
+.classpath
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/geekyclock/!svn/ver/3/GeekyClock/.classpath
+END
